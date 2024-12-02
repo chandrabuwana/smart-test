@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from "react";
+import "./index.css";
 
-function App() {
+export default function App() {
+const [inputValue, setInputValue] = useState('');
+const [result, setResult] = useState(0);
+
+function handleInput(e) {
+  const value = e.target.value;
+  setInputValue(value);
+}
+
+function handleSubmit() {
+  const justNum = inputValue.split('').filter(char => char >= '0' && char <= '9').join('');
+  const oriNum = parseInt(justNum, 10);
+  const reverseNum = parseInt(justNum.split("").reverse().join(""), 10);
+  const calc = Math.abs(oriNum - reverseNum);
+
+  setResult(calc);
+}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        Number: <input onChange={handleInput} value={inputValue}/>
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
+      <div>Result: {result}</div>
     </div>
   );
 }
-
-export default App;
