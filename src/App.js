@@ -2,18 +2,19 @@ import React,{useState} from "react";
 import "./index.css";
 
 export default function App() {
-const [inputValue, setInputValue] = useState('');
+const [inputVal, setInputVal] = useState('');
 const [result, setResult] = useState(0);
 
 function handleInput(e) {
   const value = e.target.value;
-  setInputValue(value);
+  if (value === '' || value.split('').every(input => input >= '0' && input <= '9')) {
+    setInputVal(value);
+  }
 }
 
 function handleSubmit() {
-  const justNum = inputValue.split('').filter(char => char >= '0' && char <= '9').join('');
-  const oriNum = parseInt(justNum, 10);
-  const reverseNum = parseInt(justNum.split("").reverse().join(""), 10);
+  const oriNum = parseInt(inputVal, 10);
+  const reverseNum = parseInt(inputVal.split("").reverse().join(""), 10);
   const calc = Math.abs(oriNum - reverseNum);
 
   setResult(calc);
@@ -22,7 +23,7 @@ function handleSubmit() {
   return (
     <div className="App">
       <div>
-        Number: <input onChange={handleInput} value={inputValue}/>
+        Number: <input onChange={handleInput} value={inputVal}/>
         <button onClick={handleSubmit}>Submit</button>
       </div>
       <div>Result: {result}</div>
